@@ -22,7 +22,7 @@ public class ResultMapper {
 		Result result = new Result();
 
 		result.setMarks(resultRequest.getMarks_obtained());
-		result.setPaper(paperRepository.findById(resultRequest.getPaper_id())
+		result.setPaper(paperRepository.findByName(resultRequest.getPaper_id())
 				.orElseThrow(() -> new NotFoundException("No Paper Entry for Paper: " + resultRequest.getPaper_id())));
 		result.setStudent_email(resultRequest.getStudent_email());
 
@@ -33,6 +33,6 @@ public class ResultMapper {
 		if (result == null) {
 			return null;
 		}
-		return new ResultResponse(result.getStudent_email(), result.getPaper().getId(), result.getMarks());
+		return new ResultResponse(result.getStudent_email(), result.getPaper().getName(), result.getMarks());
 	}
 }
