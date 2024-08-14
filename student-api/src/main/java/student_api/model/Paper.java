@@ -10,9 +10,9 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class PaperDetails {
+public class Paper {
 	@Id
-	private String paper_no;
+	private String id;
 	private Date date;
 	private String type;
 }
