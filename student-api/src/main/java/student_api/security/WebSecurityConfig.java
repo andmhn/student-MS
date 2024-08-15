@@ -23,12 +23,13 @@ public class WebSecurityConfig {
         return http
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(HttpMethod.GET, "/api/books", "/api/books/**").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers(HttpMethod.GET, "/api/users/me",
-                        								 "/api/results/me",
-                        								  "api/papers/me").hasAnyAuthority(ADMIN, USER)
-                        .requestMatchers("/api/users", "/api/users/**",
-                        				 "/api/results", "/api/results/**",
-                        				 "/api/papers", "/api/papers/**").hasAuthority(ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
+                        .requestMatchers(
+                        		"/api/users",
+                        		"/api/users/**",
+                        		"/api/results",
+                        		"/api/papers")
+                        .hasAuthority(ADMIN)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())

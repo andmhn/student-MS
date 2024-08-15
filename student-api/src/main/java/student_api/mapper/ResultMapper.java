@@ -33,6 +33,6 @@ public class ResultMapper {
 		if (result == null) {
 			return null;
 		}
-		return new ResultResponse(result.getStudent_email(), result.getPaper().getName(), result.getMarks());
+		return new ResultResponse(result.getId(), result.getStudent_email(), result.getPaper().getName(), result.getMarks());
 	}
 }
