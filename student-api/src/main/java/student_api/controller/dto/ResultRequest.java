@@ -16,7 +16,6 @@ public class ResultRequest {
     @NotBlank
     private String paper_id;
     
-
     @Schema(example = "55.64")
     @NotBlank
     private Float marks_obtained;
