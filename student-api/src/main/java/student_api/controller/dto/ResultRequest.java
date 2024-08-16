@@ -12,7 +12,7 @@ public class ResultRequest {
     @Email
     private String student_email;
 
-    @Schema(example = "CS-101")
+    @Schema(example = "CS-50")
     @NotBlank
     private String paper_id;
     

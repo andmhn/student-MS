@@ -12,10 +12,10 @@ import lombok.Data;
 @AllArgsConstructor
 public class AttendanceRequest {
 
-	@Schema(example = "user3@mycompany.com")
-	@Email
-    @NotBlank
-	private String student_email;
+//	@Schema(example = "user3@mycompany.com")
+//	@Email
+//    @NotBlank
+//	private String student_email;
 
 	@Schema(example = "1")
 	@NotBlank

@@ -40,7 +40,7 @@ public class ResultsController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@Operation(security = { @SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME) })
 	@PostMapping
-	ResponseEntity<Result> publishResult(@Valid @RequestBody ResultRequest resultRequest) {
+	ResponseEntity<ResultResponse> publishResult(@Valid @RequestBody ResultRequest resultRequest) {
 		// save to student
 		// A student should have only one result for a paper
 		List<Result> resultsEntries = resultRepository.findByEmail(resultRequest.getStudent_email());
@@ -54,7 +54,7 @@ public class ResultsController {
 		}
 
 		Result savedResult = resultRepository.save(resultMapper.fromResultRequest(resultRequest));
-		return ResponseEntity.ok(savedResult);
+		return ResponseEntity.ok(resultMapper.toResultResponse(savedResult));
 	}
 	
 	@Operation(security = { @SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME) })

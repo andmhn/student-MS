@@ -58,15 +58,18 @@ public class ClassController {
 	@Operation(security = { @SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME) })
 	@PostMapping("/attendances")
 	public ResponseEntity<AttendanceResponse> createNewAttendance(
-			@Valid @RequestBody AttendanceRequest attendanceRequest) {
-		System.out.println(attendanceRequest);
-
+			@Valid @RequestBody AttendanceRequest attendanceRequest,
+			@AuthenticationPrincipal CustomUserDetails currentUser
+			) {
+		String email = currentUser.getEmail();
 		// check if class id exist
 		if (!classesRepository.existsById(attendanceRequest.getClass_id())) {
 			throw new NotFoundException("CLass Not found with id: " + attendanceRequest.getClass_id());
 		}
 
 		Attendance attendance = attendanceMapper.fromAttendanceRequest(attendanceRequest);
+		attendance.setStudent_email(email);
+		
 		AttendanceResponse attendanceResponse = attendanceMapper
 				.toAttendanceResponse(attendanceRepository.save(attendance));
 

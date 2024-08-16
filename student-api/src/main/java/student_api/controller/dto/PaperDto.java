@@ -13,7 +13,6 @@ import lombok.Data;
 public class PaperDto {
 
     @Schema(example = "CS-50")
-    @Email
     private String name;
 
     @NotBlank

@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -27,6 +31,8 @@ public class AuthController {
 
     private final UserService userService;
 
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content)
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         Optional<User> userOptional = userService.validUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
@@ -38,6 +44,7 @@ public class AuthController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "409", description = "conflict", content = @Content)
     @PostMapping("/signup")
     public AuthResponse signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userService.hasUserWithUsername(signUpRequest.getUsername())) {

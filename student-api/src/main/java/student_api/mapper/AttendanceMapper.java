@@ -14,9 +14,10 @@ public class AttendanceMapper {
 		Attendance attendance = new Attendance();
 		attendance.setId(0L);
 		attendance.setDate(attendanceRequest.getDate());
-		attendance.setStudent_email(attendanceRequest.getStudent_email());
+		attendance.setStudent_email(null);
 		attendance.setIs_present(attendanceRequest.getIs_present());
 		attendance.setClass_id(attendanceRequest.getClass_id());
+		attendance.setAbsent_reason(attendanceRequest.getAbsent_reason());
 		
 		return attendance;
 	}

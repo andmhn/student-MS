@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 public class LoginRequest {
 
-    @Schema(example = "user")
+    @Schema(example = "user3")
     @NotBlank
     private String username;
 
-    @Schema(example = "user")
+    @Schema(example = "user3")
     @NotBlank
     private String password;
 }
