@@ -62,3 +62,10 @@ browse the api in Swagger UI
 ```
 http://127.0.0.1:8080/swagger-ui/index.html
 ```
+
+### test the api with pytest
+
+```
+cd tests
+pytest -v
+```
