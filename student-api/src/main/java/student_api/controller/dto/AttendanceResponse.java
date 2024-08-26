@@ -1,6 +1,6 @@
 package student_api.controller.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -22,7 +22,7 @@ public class AttendanceResponse {
 	private Long class_id;
 	
     @NotBlank
-	private LocalDateTime date;
+	private LocalDate date;
 
 	@Schema(example = "false")
     @NotBlank

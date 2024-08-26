@@ -24,11 +24,29 @@ function AdminPage() {
   const [classToTime, setClassToTime] = useState('')
   const [classType, setClassType] = useState('')
 
+  const [attendances, setAttendances] = useState([])
+  const [isAttendancesLoading, setIsAttendancesLoading] = useState(false)
+
   useEffect(() => {
     handleGetUsers()
     handleGetClasses()
+    handleGetAttendances()
   }, [])
 
+
+  ///// Attendance related
+
+  const handleGetAttendances = async () => {
+    try {
+      setIsAttendancesLoading(true)
+      const response = await StudentApi.getAllAttendances(user)
+      setAttendances(response.data)
+    } catch (error) {
+      handleLogError(error)
+    } finally {
+      setIsAttendancesLoading(false)
+    }
+  }
 
   ///// class related
 
@@ -178,6 +196,9 @@ function AdminPage() {
         classType={classType}
         classFromTime={classFromTime}
         classToTime={classToTime}
+
+        isAttendancesLoading={isAttendancesLoading}
+        attendances={attendances}
       />
     </Container>
   )

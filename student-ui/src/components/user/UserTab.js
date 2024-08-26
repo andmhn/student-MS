@@ -1,31 +1,16 @@
 import React from 'react'
 import { Tab } from 'semantic-ui-react'
-import UserTable from './UserTable'
 import ClassTable from './ClassTable'
-import AdminAttendanceTable from './AdminAttendanceTable'
+import AttendanceTable from './AttendanceTable'
 
-function AdminTab(props) {
+function UserTab(props) {
   const { handleInputChange } = props
-  const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleSearchUser } = props
-  const { isClassLoading, classes, className, classNameSearch, handleAddClass, handleDeleteClass, handleSearchClass } = props
+  const { isClassLoading, classes, className, classNameSearch, handleAddClass, handleAttendClass, handleSearchClass } = props
   const { classDescription, classFromTime, classToTime, classType } = props
-  const { isAttendancesLoading, attendances} = props
+
+  const {isAttendancesLoading, attendances} = props
 
   const panes = [
-    {
-      menuItem: { key: 'users', icon: 'users', content: 'Users' },
-      render: () => (
-        <Tab.Pane loading={isUsersLoading}>
-          <UserTable
-            users={users}
-            userUsernameSearch={userUsernameSearch}
-            handleInputChange={handleInputChange}
-            handleDeleteUser={handleDeleteUser}
-            handleSearchUser={handleSearchUser}
-          />
-        </Tab.Pane>
-      )
-    },
     {
       menuItem: { key: 'classes', icon: 'building', content: 'Classes' },
       render: () => (
@@ -35,7 +20,7 @@ function AdminTab(props) {
             classNameSearch={classNameSearch}
             handleInputChange={handleInputChange}
             handleAddClass={handleAddClass}
-            handleDeleteClass={handleDeleteClass}
+            handleAttendClass={handleAttendClass}
             handleSearchClass={handleSearchClass}
             className={className}
             classDescription={classDescription}
@@ -47,10 +32,10 @@ function AdminTab(props) {
       )
     },
     {
-      menuItem: { key: 'attendances', icon: 'tasks', content: 'All Attendances' },
+      menuItem: { key: 'attendances', icon: 'tasks', content: 'My Attendances' },
       render: () => (
         <Tab.Pane loading={isAttendancesLoading}>
-          <AdminAttendanceTable
+          <AttendanceTable
             attendances={attendances}
           />
         </Tab.Pane>
@@ -63,4 +48,4 @@ function AdminTab(props) {
   )
 }
 
-export default AdminTab
+export default UserTab

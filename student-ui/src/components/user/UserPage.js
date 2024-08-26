@@ -4,34 +4,42 @@ import { Container } from 'semantic-ui-react'
 import { useAuth } from '../context/AuthContext'
 import { StudentApi } from '../misc/StudentApi'
 import { handleLogError } from '../misc/Helpers'
-import ClassList from '../home/ClassList'
+import UserTab from './UserTab'
 
 function UserPage() {
   const Auth = useAuth()
   const user = Auth.getUser()
   const isUser = user.role === 'USER'
 
-  // classes--------------------------------------------------
-  //----------------------------------------------------------
   const [classes, setClasses] = useState([])
-  const [classNameSearch, setclassNameSearch] = useState('')
-  const [isClassesLoading, setIsClassesLoading] = useState(false)
+  const [className, setClassName] = useState('')
+  const [classDescription, setClassDescription] = useState('')
+  const [classNameSearch, setClassNameSearch] = useState('')
+  const [isClassLoading, setIsClassLoading] = useState(false)
+  const [classFromTime, setClassFromTime] = useState('')
+  const [classToTime, setClassToTime] = useState('')
+  const [classType, setClassType] = useState('')
 
-  const handleInputChange = (e, { name, value }) => {
-    if (name === 'classNameSearch') {
-      setclassNameSearch(value)
-    }
-  }
+  const [attendances, setAttendances] = useState([])
+  const [isAttendancesLoading, setIsAttendancesLoading] = useState(false)
+
+  useEffect(() => {
+    handleGetClasses()
+    handleGetAttendances()
+  }, [])
+
+
+  ///// class related
 
   const handleGetClasses = async () => {
     try {
-      setIsClassesLoading(true)
+      setIsClassLoading(true)
       const response = await StudentApi.getClasses()
       setClasses(response.data)
     } catch (error) {
       handleLogError(error)
     } finally {
-      setIsClassesLoading(false)
+      setIsClassLoading(false)
     }
   }
 
@@ -43,33 +51,82 @@ function UserPage() {
       } else {
         response = await StudentApi.getClassesByName(classNameSearch)
       }
-      const classes = response.data
-      console.log(classes)
-      setClasses(classes)
+      setClasses(response.data)
     } catch (error) {
       handleLogError(error)
       setClasses([])
     }
   }
 
+  ///// Attendance related
 
-  useEffect(() => {
-    handleGetClasses()
-  }, [])
+  const handleGetAttendances = async () => {
+    try {
+      setIsAttendancesLoading(true)
+      const response = await StudentApi.getUserAttendances(user)
+      setAttendances(response.data)
+    } catch (error) {
+      handleLogError(error)
+    } finally {
+      setIsAttendancesLoading(false)
+    }
+  }
+  const handleAttendClass = async (classId, isPresent) => {
+    let attendancePayload = {
+      "class_id": classId,
+      "date": new Date().toJSON().slice(0, 10),
+      "is_present": isPresent,
+      "absent_reason": ""
+    }
+    try {
+      let hasEntry = await StudentApi.hasClassEntryForToday(user, classId)
+      if(hasEntry.data === false) {
+        await StudentApi.addAttendance(user, attendancePayload)
+      } else {
+        alert("Already registered attendance for Today")
+      }
+    } catch (error) {
+      handleLogError(error)
+      setClasses([])
+    }
+  }
 
+  const handleInputChange = (e, { name, value }) => {
+    if (name === 'classNameSearch') {
+      setClassNameSearch(value)
+    } else if (name === 'classDescription') {
+      setClassDescription(value)
+    } else if (name === 'className') {
+      setClassName(value)
+    } else if (name === 'classFromTime') {
+      setClassFromTime(value)
+    } else if (name === 'classToTime') {
+      setClassToTime(value)
+    } else if (name === 'classType') {
+      setClassType(value)
+    }
+  }
 
   if (!isUser) {
     return <Navigate to='/' />
   }
 
   return (
-    <Container text>
-      <ClassList
-        isClassesLoading={isClassesLoading}
+    <Container>
+      <UserTab
+        handleInputChange={handleInputChange}
+        isClassLoading={isClassLoading}
+        handleSearchClass={handleSearchClass}
         classNameSearch={classNameSearch}
         classes={classes}
-        handleInputChange={handleInputChange}
-        handleSearchClass={handleSearchClass}
+        className={className}
+        classDescription={classDescription}
+        classType={classType}
+        classFromTime={classFromTime}
+        classToTime={classToTime}
+        handleAttendClass={handleAttendClass}
+        attendances={attendances}
+        isAttendancesLoading={isAttendancesLoading}
       />
     </Container>
   )

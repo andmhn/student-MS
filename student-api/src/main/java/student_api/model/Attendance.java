@@ -1,6 +1,6 @@
 package student_api.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Attendance {
 
 	private Long class_id;
 	
-	private LocalDateTime date;
+	private LocalDate date;
 
 	private Boolean is_present;
 

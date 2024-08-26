@@ -7,11 +7,17 @@ export const StudentApi = {
   numberOfUsers,
   getUsers,
   deleteUser,
+
   numberOfClasses,
   getClasses,
   getClassesByName,
   deleteClass,
-  addClass
+  addClass,
+  
+  addAttendance,
+  getUserAttendances,
+  hasClassEntryForToday,
+  getAllAttendances
 }
 
 // -- Axios
@@ -87,6 +93,42 @@ function addClass(admin, classPayload) {
   return instance.post('/api/classes', classPayload, {
     headers: {
       'Content-type': 'application/json',
+      'Authorization': basicAuth(admin)
+    }
+  })
+}
+
+function hasClassEntryForToday(user, classId) {
+  return instance.get(`/api/classes/${classId}/hasUserEntryForToday`, {
+    headers: { 'Authorization': basicAuth(user) }
+  })
+}
+
+
+// -----------------------
+//  Attendance related
+//------------------------
+
+function addAttendance(user, attendancePayload) {
+  return instance.post('/api/classes/attendances', attendancePayload, {
+    headers: {
+      'Content-type': 'application/json',
+      'Authorization': basicAuth(user)
+    }
+  })
+}
+
+function getUserAttendances(user) {
+  return instance.get('/api/classes/attendances/me', {
+    headers: {
+      'Authorization': basicAuth(user)
+    }
+  })
+}
+
+function getAllAttendances(admin) {
+  return instance.get('/api/classes/attendances', {
+    headers: {
       'Authorization': basicAuth(admin)
     }
   })
