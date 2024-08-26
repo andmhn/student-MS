@@ -98,7 +98,7 @@
 		            <outputDirectory>${basedir}/target/classes/static/</outputDirectory>
 		            <resources>
 		              <resource>
-		                <directory>${basedir}/../student-ui/dist</directory>
+		                <directory>${basedir}/../student-ui/build</directory>
 		              </resource>
 		            </resources>
 		          </configuration>

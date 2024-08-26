@@ -1,4 +1,3 @@
-from tarfile import NUL
 import requests
 from requests.auth import HTTPBasicAuth
 import uuid

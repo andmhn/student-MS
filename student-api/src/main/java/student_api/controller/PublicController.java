@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -27,6 +28,11 @@ public class PublicController {
 	public Integer getNumberOfUsers() {
 		return userService.getUsers().size();
 	}
+	
+	@GetMapping("/numberOfClasses")
+	public Long numberOfClasses() {
+		return classesRepository.count();
+	}
 
 	@GetMapping("/classes")
 	public List<ClassResponse> allClasses() {
@@ -37,6 +43,19 @@ public class PublicController {
 			classResponse.add(classMapper.toClassResponse(c));
 		}
 		return classResponse;
+	}
+	
+	@GetMapping("/classes/search/{name}")
+	public List<ClassResponse> getClassByName(@PathVariable String name) {
+		List<Classes> classes = classesRepository.findByNameContainingIgnoreCaseOrderByName(name);
+		
+		List<ClassResponse> classesResponse = new ArrayList<>();
+
+		for (Classes c : classes) {
+			classesResponse.add(classMapper.toClassResponse(c));
+		}
+		
+		return classesResponse;
 	}
 
 	@GetMapping("/classes/{class_id}")
