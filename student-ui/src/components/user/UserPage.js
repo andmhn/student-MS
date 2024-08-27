@@ -139,6 +139,8 @@ function UserPage() {
         handleAttendClass={handleAttendClass}
         attendances={attendances}
         isAttendancesLoading={isAttendancesLoading}
+        handleGetAttendances = {handleGetAttendances}
+        handleGetClasses = {handleGetClasses}
       />
     </Container>
   )

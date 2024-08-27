@@ -6,9 +6,9 @@ import AttendanceTable from './AttendanceTable'
 function UserTab(props) {
   const { handleInputChange } = props
   const { isClassLoading, classes, className, classNameSearch, handleAddClass, handleAttendClass, handleSearchClass } = props
-  const { classDescription, classFromTime, classToTime, classType } = props
+  const { classDescription, classFromTime, classToTime, classType, handleGetClasses } = props
 
-  const {isAttendancesLoading, attendances} = props
+  const {isAttendancesLoading, attendances, handleGetAttendances} = props
 
   const panes = [
     {
@@ -44,7 +44,12 @@ function UserTab(props) {
   ]
 
   return (
-    <Tab menu={{ attached: 'top' }} panes={panes} />
+    <Tab onTabChange={
+      () => {
+        handleGetAttendances()
+        handleGetClasses()
+      }
+    } menu={{ attached: 'top' }} panes={panes} />
   )
 }
 
