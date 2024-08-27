@@ -47,7 +47,12 @@ function Login() {
   }
 
   if (isLoggedIn) {
-    return <Navigate to={'/'} />
+    const user = Auth.getUser()
+    if(user.role === 'ADMIN') {
+      return <Navigate to={'/adminpage'} />
+    } else {
+      return <Navigate to={'/userpage'} />
+    }
   }
 
   return (

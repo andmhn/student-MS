@@ -70,7 +70,7 @@ function Signup() {
   }
 
   if (isLoggedIn) {
-    return <Navigate to='/' />
+    return <Navigate to='/userpage' />
   }
 
   return (
