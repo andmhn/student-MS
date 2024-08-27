@@ -1,56 +1,71 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Button, Form, Grid, Input, Table } from 'semantic-ui-react'
 
 import { GridColumn, Popup } from 'semantic-ui-react'
 
 // TODO disable button after entry
 
-const PopupAttendance = ({ classId, handleAttendClass, disabled }) => {
-    return (
-        <Popup wide trigger={
-            <Button
-                circular
-                color='blue'
-                size='small'
-                icon='checked calendar'
-                content='Attend'
-                disabled = {disabled}
-            />
-        } on='click'>
-            <Grid divided columns='equal'>
-                <GridColumn>
-                    <Popup
-                        trigger={
-                            <Button
-                                color='green'
-                                content='Present'
-                                fluid
-                                onClick={() => handleAttendClass(classId, true)} />
-                        }
-                        content='Present Today for selected class.'
-                        position='top center'
-                        size='tiny'
-                        inverted
-                    />
-                </GridColumn>
-                <GridColumn >
-                    <Popup
-                        trigger={
-                            <Button
-                                color='red'
-                                content='Absent'
-                                fluid
-                                onClick={() => handleAttendClass(classId, false)} />
-                        }
-                        content='Absent Today for selected class.'
-                        position='top center'
-                        size='tiny'
-                        inverted
-                    />
-                </GridColumn>
-            </Grid>
-        </Popup>
-    )
+class PopupAttendance extends Component {
+    state = { isDisabled: this.props.disabled }
+
+    hide = () => this.setState({ isDisabled: true })
+
+    render() {
+        const { isDisabled } = this.state
+        return (
+            <Popup disabled = {isDisabled} wide trigger={
+                <Button
+                    circular
+                    color='blue'
+                    size='small'
+                    icon='checked calendar'
+                    content='Attend'
+                    disabled={isDisabled}
+                />
+            } on='click'>
+                <Grid divided columns='equal'>
+                    <GridColumn>
+                        <Popup
+                            trigger={
+                                <Button
+                                    color='green'
+                                    content='Present'
+                                    fluid
+                                    onClick={() => {
+                                        this.hide()
+                                        this.props.handleAttendClass(this.props.classId, true);
+                                    }}
+                                />
+                            }
+                            content='Present Today for selected class.'
+                            position='top center'
+                            size='tiny'
+                            inverted
+                        />
+                    </GridColumn>
+                    <GridColumn >
+                        <Popup
+                            trigger={
+                                <Button
+                                    color='red'
+                                    content='Absent'
+                                    fluid
+                                    onClick={() => {
+                                        this.hide()
+                                        this.props.handleAttendClass(this.props.classId, false);
+                                    }}
+                                />
+                            }
+                            content='Absent Today for selected class.'
+                            position='top center'
+                            size='tiny'
+                            inverted
+                        />
+                    </GridColumn>
+                </Grid>
+            </Popup>
+        )
+    }
 }
 
 
