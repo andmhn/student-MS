@@ -199,6 +199,8 @@ function AdminPage() {
 
         isAttendancesLoading={isAttendancesLoading}
         attendances={attendances}
+        handleGetUsers = {handleGetUsers}
+        handleGetAttendances = {handleGetAttendances}
       />
     </Container>
   )

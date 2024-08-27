@@ -10,6 +10,7 @@ function AdminTab(props) {
   const { isClassLoading, classes, className, classNameSearch, handleAddClass, handleDeleteClass, handleSearchClass } = props
   const { classDescription, classFromTime, classToTime, classType } = props
   const { isAttendancesLoading, attendances} = props
+  const { handleGetUsers, handleGetAttendances} = props
 
   const panes = [
     {
@@ -59,7 +60,10 @@ function AdminTab(props) {
   ]
 
   return (
-    <Tab menu={{ attached: 'top' }} panes={panes} />
+    <Tab onTabChange={() => {
+      handleGetUsers()
+      handleGetAttendances()
+    }} menu={{ attached: 'top' }} panes={panes} />
   )
 }
 
