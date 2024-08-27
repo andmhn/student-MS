@@ -3,8 +3,6 @@ import { Button, Form, Grid, Input, Table } from 'semantic-ui-react'
 
 import { GridColumn, Popup } from 'semantic-ui-react'
 
-// TODO disable button after entry
-
 class PopupAttendance extends Component {
     state = { isDisabled: this.props.disabled }
 

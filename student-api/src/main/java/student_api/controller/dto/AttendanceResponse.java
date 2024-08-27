@@ -7,9 +7,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AttendanceResponse {
 	private Long id;
 	
@@ -18,6 +20,8 @@ public class AttendanceResponse {
     @NotBlank
 	private String student_email;
 
+    private String class_name;
+    
     @NotBlank
 	private Long class_id;
 	

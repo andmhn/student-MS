@@ -23,7 +23,7 @@ public class AttendanceMapper {
 	}
 
 	public AttendanceResponse toAttendanceResponse(Attendance attendance) {
-		return new AttendanceResponse(attendance.getId(), attendance.getStudent_email(),
+		return new AttendanceResponse(attendance.getId(), attendance.getStudent_email(), null,
 				attendance.getClass_id(),attendance.getDate(), attendance.getIs_present(), attendance.getAbsent_reason());
 	}
 }

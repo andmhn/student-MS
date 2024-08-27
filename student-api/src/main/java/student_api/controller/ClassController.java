@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,7 +26,6 @@ import student_api.controller.dto.AttendanceRequest;
 import student_api.controller.dto.AttendanceResponse;
 import student_api.controller.dto.ClassRequest;
 import student_api.controller.dto.ClassResponse;
-import student_api.exeptions.DuplicatedInfoException;
 import student_api.exeptions.ForbiddenException;
 import student_api.exeptions.NotFoundException;
 import student_api.mapper.AttendanceMapper;
@@ -115,7 +113,16 @@ public class ClassController {
 		List<AttendanceResponse> attendanceResponse = new ArrayList<>();
 
 		attendances.forEach((a) -> {
-			attendanceResponse.add(attendanceMapper.toAttendanceResponse(a));
+			AttendanceResponse responseItem =  attendanceMapper.toAttendanceResponse(a);
+			
+			if(classesRepository.existsById(responseItem.getClass_id())) {
+				String className = classesRepository.findById(responseItem.getClass_id()).get().getName();
+				responseItem.setClass_name(className);
+			}
+			else {
+				responseItem.setClass_name("");
+			}
+			attendanceResponse.add(responseItem);
 		});
 
 		return attendanceResponse;
@@ -133,7 +140,16 @@ public class ClassController {
 		List<AttendanceResponse> attendanceResponse = new ArrayList<>();
 
 		attendances.forEach((a) -> {
-			attendanceResponse.add(attendanceMapper.toAttendanceResponse(a));
+			AttendanceResponse responseItem =  attendanceMapper.toAttendanceResponse(a);
+			
+			if(classesRepository.existsById(responseItem.getClass_id())) {
+				String className = classesRepository.findById(responseItem.getClass_id()).get().getName();
+				responseItem.setClass_name(className);
+			}
+			else {
+				responseItem.setClass_name("");
+			}
+			attendanceResponse.add(responseItem);			
 		});
 
 		return attendanceResponse;
