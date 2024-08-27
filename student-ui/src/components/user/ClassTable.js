@@ -5,7 +5,7 @@ import { GridColumn, Popup } from 'semantic-ui-react'
 
 // TODO disable button after entry
 
-const PopupAttendance = ({ classId, handleAttendClass })  => {
+const PopupAttendance = ({ classId, handleAttendClass, disabled }) => {
     return (
         <Popup wide trigger={
             <Button
@@ -14,6 +14,7 @@ const PopupAttendance = ({ classId, handleAttendClass })  => {
                 size='small'
                 icon='checked calendar'
                 content='Attend'
+                disabled = {disabled}
             />
         } on='click'>
             <Grid divided columns='equal'>
@@ -59,7 +60,7 @@ function ClassTable(
         classNameSearch,
         handleInputChange,
         handleAttendClass,
-        handleSearchClass,
+        handleSearchClass
     }) {
     let classList
     if (classes.length === 0) {
@@ -76,6 +77,7 @@ function ClassTable(
                         <PopupAttendance
                             classId={classItem.id}
                             handleAttendClass={handleAttendClass}
+                            disabled={(classItem.is_present_today)}
                         />
                     </Table.Cell>
                     <Table.Cell>{classItem.id}</Table.Cell>

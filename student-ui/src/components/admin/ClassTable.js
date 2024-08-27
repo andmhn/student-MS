@@ -1,6 +1,43 @@
 import React from 'react'
 import { Button, Form, Grid, Icon, Input, Segment, Table } from 'semantic-ui-react'
 
+import { Component } from 'react'
+import { Confirm } from 'semantic-ui-react'
+
+class ConfirmDelete extends Component{
+  state = { open: false }
+
+  show = () => this.setState({ open: true })
+  handleConfirm = () => {
+    this.props.handleDeleteClass(this.props.classItem.id)
+    this.setState({ open: false })
+  }
+  handleCancel = () => this.setState({ open: false })
+
+  render() {
+    const { open } = this.state
+
+    return (
+      <div>
+
+        <Button
+          circular
+          color='red'
+          size='small'
+          icon='trash'
+          onClick={this.show}
+        />
+
+        <Confirm
+          open={open}
+          onCancel={this.handleCancel}
+          onConfirm={this.handleConfirm}
+        />
+      </div>
+    )
+  }
+}
+
 function ClassForm(
   {
     className,
@@ -82,12 +119,9 @@ function ClassTable(
       return (
         <Table.Row key={classItem.id}>
           <Table.Cell collapsing>
-            <Button
-              circular
-              color='red'
-              size='small'
-              icon='trash'
-              onClick={() => handleDeleteClass(classItem.id)}
+            <ConfirmDelete
+              handleDeleteClass = {handleDeleteClass}
+              classItem = {classItem}
             />
           </Table.Cell>
           <Table.Cell>{classItem.id}</Table.Cell>

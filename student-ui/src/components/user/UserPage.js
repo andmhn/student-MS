@@ -35,7 +35,19 @@ function UserPage() {
     try {
       setIsClassLoading(true)
       const response = await StudentApi.getClasses()
-      setClasses(response.data)
+
+      setClasses(
+        await Promise.all(
+          // fetching an attribute "is_present_today"
+
+          response.data.map(async c => {
+            const r = await StudentApi.hasClassEntryForToday(user, c.id)
+            c.is_present_today = r.data
+            return c
+          })
+        )
+      )
+
     } catch (error) {
       handleLogError(error)
     } finally {
@@ -80,7 +92,7 @@ function UserPage() {
     }
     try {
       let hasEntry = await StudentApi.hasClassEntryForToday(user, classId)
-      if(hasEntry.data === false) {
+      if (hasEntry.data === false) {
         await StudentApi.addAttendance(user, attendancePayload)
       } else {
         alert("Already registered attendance for Today")

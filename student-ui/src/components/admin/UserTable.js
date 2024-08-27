@@ -1,5 +1,7 @@
+import { Component } from 'react'
 import React from 'react'
-import { Form, Button, Input, Table } from 'semantic-ui-react'
+import { Form, Button, Input, Table, Confirm } from 'semantic-ui-react'
+
 
 function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteUser, handleSearchUser }) {
   let userList
@@ -14,13 +16,10 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
       return (
         <Table.Row key={user.id}>
           <Table.Cell collapsing>
-            <Button
-              circular
-              color='red'
-              size='small'
-              icon='trash'
+            <ConfirmDelete
               disabled={user.username === 'admin'}
-              onClick={() => handleDeleteUser(user.username)}
+              handleDeleteUser={handleDeleteUser}
+              username={user.username}
             />
           </Table.Cell>
           <Table.Cell>{user.id}</Table.Cell>
@@ -47,7 +46,7 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
       <Table compact striped selectable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell width={1}/>
+            <Table.HeaderCell width={1} />
             <Table.HeaderCell width={1}>ID</Table.HeaderCell>
             <Table.HeaderCell width={3}>Username</Table.HeaderCell>
             <Table.HeaderCell width={4}>Name</Table.HeaderCell>
@@ -61,6 +60,42 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
       </Table>
     </>
   )
+}
+
+
+class ConfirmDelete extends Component {
+  state = { open: false }
+
+  show = () => this.setState({ open: true })
+  handleConfirm = () => {
+    this.props.handleDeleteUser(this.props.username)
+    this.setState({ open: false })
+  }
+  handleCancel = () => this.setState({ open: false })
+
+  render() {
+    const { open } = this.state
+
+    return (
+      <div>
+
+        <Button
+          circular
+          color='red'
+          size='small'
+          icon='trash'
+          disabled={this.props.disabled}
+          onClick={this.show}
+        />
+
+        <Confirm
+          open={open}
+          onCancel={this.handleCancel}
+          onConfirm={this.handleConfirm}
+        />
+      </div>
+    )
+  }
 }
 
 export default UserTable
