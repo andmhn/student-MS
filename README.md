@@ -89,3 +89,13 @@ http://127.0.0.1:8080/swagger-ui/index.html
 cd tests
 pytest -v
 ```
+
+## develop frontend seperately
+
+```
+cd student-ui
+
+npm run start --port 3000
+```
+
+since only http://localhost:3000 is allowed in cors 
