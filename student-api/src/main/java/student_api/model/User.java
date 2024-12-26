@@ -26,7 +26,7 @@ public class User {
     private String password;
     private String name;
     private String email;
-    private String role; // USER ADMIN
+    private String role; // USER, ADMIN
     
     public User(String username, String password, String name, String email, String role) {
         this.username = username;

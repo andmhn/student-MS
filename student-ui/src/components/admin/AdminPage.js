@@ -6,6 +6,9 @@ import { StudentApi } from '../misc/StudentApi'
 import AdminTab from './AdminTab'
 import { handleLogError } from '../misc/Helpers'
 
+// TODO: user list emails
+// handle get attendance by user
+
 function AdminPage() {
   const Auth = useAuth()
   const user = Auth.getUser()
