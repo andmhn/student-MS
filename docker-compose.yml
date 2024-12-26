@@ -3,6 +3,7 @@ services:
     image: 'docker-spring-boot-postgres:latest'
     build:
       context: .
+      dockerfile: ./Dockerfile
     container_name: studentMS
     depends_on:
       - studentDB
